@@ -10,7 +10,7 @@ export async function GET() {
   try {
     const client = getSupabaseAdmin();
     adminClientCreated = client !== null;
-  } catch (e) {
+  } catch {
     adminClientCreated = false;
   }
 
