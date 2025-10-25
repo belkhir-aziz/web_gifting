@@ -3,10 +3,7 @@ import { useEffect, useState } from 'react';
 import { OCCASIONS, RELATIONSHIPS, AGE_RANGES } from '@/lib/constants';
 
 export default function ProductsPage() {
-  const [hasKey, setHasKey] = useState(false);
-  const [checking, setChecking] = useState(true);
-  const [key, setKey] = useState('');
-  const [keyError, setKeyError] = useState('');
+  // Removed access key logic
   const [askForCategorization, setAskForCategorization] = useState(false);
   const [form, setForm] = useState({ 
     name: '', 
@@ -29,34 +26,9 @@ export default function ProductsPage() {
     } catch (e) {
       // Ignore localStorage errors
     }
-
-    // Check if user has valid key
-    fetch('/api/auth/check-key')
-      .then(res => res.json())
-      .then(data => {
-        setHasKey(data.valid || false);
-        setChecking(false);
-      })
-      .catch(() => {
-        setChecking(false);
-      });
   }, []);
 
-  const submitKey = async () => {
-    setKeyError('');
-    const res = await fetch('/api/auth/validate-key', {
-      method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ key }),
-    });
-    const data = await res.json();
-    if (res.ok) {
-      setHasKey(true);
-      setKey('');
-    } else {
-      setKeyError(data.error || 'Invalid key');
-    }
-  };
+  // Removed submitKey logic
 
   const toggleCategory = (field: 'occasions' | 'relationships' | 'age_ranges', value: string) => {
     setForm(prev => ({
@@ -124,62 +96,7 @@ export default function ProductsPage() {
     }
   };
 
-  if (checking) {
-    return (
-      <div className="flex min-h-[60vh] items-center justify-center">
-        <div className="text-gray-500">Loading...</div>
-      </div>
-    );
-  }
-
-  if (!hasKey) {
-    return (
-      <div className="mx-auto max-w-lg">
-        <div className="rounded-lg border bg-white p-8 shadow-sm">
-          <h1 className="text-3xl font-bold">Products Access</h1>
-          <p className="mt-4 text-gray-600">
-            To manage products, you need an access key.
-          </p>
-          
-          <div className="mt-6 rounded-lg bg-blue-50 p-4">
-            <h2 className="font-semibold text-blue-900">Request Access</h2>
-            <p className="mt-2 text-sm text-blue-800">
-              Send an email to{' '}
-              <a href="mailto:aziz.belkhir.aziz@gmail.com" className="font-medium underline">
-                aziz.belkhir.aziz@gmail.com
-              </a>{' '}
-              with your motivation and you'll receive an access key.
-            </p>
-          </div>
-
-          <div className="mt-6 space-y-4">
-            <div>
-              <label className="block text-sm font-medium text-gray-700">Access Key</label>
-              <input
-                type="text"
-                className="mt-1 w-full rounded-lg border border-gray-300 px-4 py-3 focus:border-blue-500 focus:outline-none focus:ring-2 focus:ring-blue-500"
-                placeholder="Enter your access key"
-                value={key}
-                onChange={(e) => setKey(e.target.value)}
-                onKeyDown={(e) => e.key === 'Enter' && submitKey()}
-              />
-            </div>
-            {keyError && (
-              <div className="rounded-lg bg-red-50 p-3 text-sm text-red-700">
-                {keyError}
-              </div>
-            )}
-            <button 
-              className="w-full rounded-lg bg-blue-600 px-6 py-3 font-medium text-white transition-colors hover:bg-blue-700 focus:outline-none focus:ring-2 focus:ring-blue-500 focus:ring-offset-2"
-              onClick={submitKey}
-            >
-              Submit Key
-            </button>
-          </div>
-        </div>
-      </div>
-    );
-  }
+  // Removed all access key UI and logic
 
   return (
     <div className="space-y-8">
