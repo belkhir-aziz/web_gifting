@@ -11,7 +11,16 @@ const RatingSchema = z.object({
   age_ranges: z.array(z.string()).optional(),
 });
 
-let RATINGS: any[] = [];
+type Rating = {
+  itemId: string;
+  action: 'like' | 'dislike' | 'superlike';
+  occasions?: string[];
+  relationships?: string[];
+  age_ranges?: string[];
+  session_id?: string;
+  at?: string;
+};
+const RATINGS: Rating[] = [];
 
 export async function POST(req: NextRequest) {
   try {
@@ -52,15 +61,19 @@ export async function POST(req: NextRequest) {
         });
         
         return response;
-      } catch (e: any) {
-        console.error('Supabase error:', e);
+      } catch (e) {
+        if (e instanceof Error) {
+          console.error('Supabase error:', e.message);
+        } else {
+          console.error('Supabase error:', e);
+        }
         // Fall through to in-memory storage
       }
     }
     
     // Fallback to in-memory
-    const record = { ...r, session_id: sessionId, at: new Date().toISOString() };
-    RATINGS.push(record);
+  const record: Rating = { ...r, session_id: sessionId, at: new Date().toISOString() };
+  RATINGS.push(record);
     
     const response = NextResponse.json({ ok: true });
     response.cookies.set('session_id', sessionId, {
@@ -71,8 +84,11 @@ export async function POST(req: NextRequest) {
     });
     
     return response;
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Invalid payload' }, { status: 400 });
+  } catch (e) {
+    if (e instanceof Error) {
+      return NextResponse.json({ error: e.message }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
   }
 }
 
@@ -87,8 +103,12 @@ export async function GET() {
       
       if (error) throw error;
       return NextResponse.json({ ratings: data || [] });
-    } catch (e: any) {
-      console.error('Supabase error:', e);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error('Supabase error:', e.message);
+      } else {
+        console.error('Supabase error:', e);
+      }
     }
   }
   

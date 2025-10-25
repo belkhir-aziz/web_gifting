@@ -8,15 +8,17 @@ const KeysSchema = z.object({
 });
 
 // Placeholder in-memory store; replace with Supabase in production
-let KEYS_ENCRYPTED_B64: string | null = null;
+// Removed unused KEYS_ENCRYPTED_B64 variable
 
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
     const parsed = KeysSchema.parse(body);
-    KEYS_ENCRYPTED_B64 = encryptJson(parsed);
     return NextResponse.json({ ok: true });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Invalid payload' }, { status: 400 });
+  } catch (e) {
+    if (e instanceof Error) {
+      return NextResponse.json({ error: e.message }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
   }
 }

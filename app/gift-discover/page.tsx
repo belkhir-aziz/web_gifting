@@ -2,7 +2,22 @@
 import { useEffect, useState } from 'react';
 
 export default function GiftDiscover() {
-  const [queue, setQueue] = useState<any[]>([]);
+  type Product = {
+    id?: string;
+    name: string;
+    price: string;
+    image_url: string;
+    product_link: string;
+    description?: string;
+    category?: string;
+    availability?: boolean;
+    rating?: number;
+    occasions?: string[];
+    relationships?: string[];
+    age_ranges?: string[];
+    needs_categorization?: boolean;
+  };
+  const [queue, setQueue] = useState<Product[]>([]);
   const truncateWords = (s?: string, maxWords = 13) => {
     if (!s) return '';
     const words = s.trim().split(/\s+/);
@@ -78,11 +93,14 @@ export default function GiftDiscover() {
                 {/* Product Image */}
                 {current.image_url && (
                   <div className="relative aspect-[3/2] bg-gradient-to-br from-slate-100 to-slate-200">
-                    <img 
-                      src={current.image_url} 
-                      alt={current.name}
-                      className="w-full h-full object-cover"
-                    />
+                    <div className="w-full h-full">
+                      {/* eslint-disable-next-line @next/next/no-img-element */}
+                      <img 
+                        src={current.image_url} 
+                        alt={current.name}
+                        className="w-full h-full object-cover"
+                      />
+                    </div>
                   </div>
                 )}
                 
@@ -97,7 +115,7 @@ export default function GiftDiscover() {
                   )}
                   
                   {current.description && (
-                    <p className="text-slate-600 text-lg leading-relaxed line-clamp-3">{current.description}</p>
+                    <p className="text-slate-600 text-lg leading-relaxed line-clamp-3">{current.description?.replace("'", "&apos;")}</p>
                   )}
                   
                   {current.product_link && (

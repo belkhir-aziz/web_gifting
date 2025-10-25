@@ -18,7 +18,26 @@ const ProductSchema = z.object({
 });
 
 // Fallback in-memory storage if Supabase is not configured
-let PRODUCTS: any[] = [];
+type Product = {
+  id?: string;
+  name: string;
+  price: string;
+  image_url: string;
+  product_link: string;
+  description?: string;
+  category?: string;
+  availability?: boolean;
+  rating?: number;
+  occasions?: string[];
+  relationships?: string[];
+  age_ranges?: string[];
+  needs_categorization?: boolean;
+};
+type DBProduct = Product & {
+  affiliate_link?: string;
+  created_at?: string;
+};
+const PRODUCTS: Product[] = [];
 
 export async function GET() {
   const supabase = getSupabaseAdmin();
@@ -31,10 +50,11 @@ export async function GET() {
         .select('*');
       if (prodErr) throw prodErr;
 
-      const products = (productsRaw || []).map((p: any) => ({
+      const products = (productsRaw || []).map((p: DBProduct) => ({
         ...p,
         product_link: p.affiliate_link,
         price: p.price != null ? `$${p.price}` : null,
+        created_at: p.created_at,
       }));
 
       if (products.length === 0) {
@@ -42,8 +62,8 @@ export async function GET() {
       }
 
       // 2) Load reactions and count per product (avoid potential Bad Request with .in filter)
-      const ids = products.map((p: any) => p.id);
-      let reactionsRaw: any[] | null = null;
+  const ids = products.map((p) => p.id);
+  let reactionsRaw: { product_id: string }[] | null = null;
       try {
         const { data, error: reactErr } = await supabase
           .from('web_reactions')
@@ -56,13 +76,13 @@ export async function GET() {
       }
 
       const counts = new Map<string, number>();
-      for (const r of (reactionsRaw || []).filter((r: any) => ids.includes(r.product_id))) {
+      for (const r of (reactionsRaw || []).filter((r) => ids.includes(r.product_id))) {
         const k = String(r.product_id);
         counts.set(k, (counts.get(k) || 0) + 1);
       }
 
       // 3) Sort by: fewest reactions first, then newest (no recent-boost)
-      const sorted = [...products].sort((a: any, b: any) => {
+      const sorted = [...products].sort((a, b) => {
         const aCreated = a.created_at ? new Date(a.created_at).getTime() : 0;
         const bCreated = b.created_at ? new Date(b.created_at).getTime() : 0;
         const aCount = counts.get(String(a.id)) || 0;
@@ -76,8 +96,12 @@ export async function GET() {
         res.headers.set('x-products-source', 'supabase');
         return res;
       }
-    } catch (e: any) {
-      console.error('Supabase error:', e);
+    } catch (e) {
+      if (e instanceof Error) {
+        console.error('Supabase error:', e.message);
+      } else {
+        console.error('Supabase error:', e);
+      }
       // Fall through to in-memory storage
     }
   }
@@ -129,17 +153,24 @@ export async function POST(req: NextRequest) {
         };
         
         return NextResponse.json({ product: transformedProduct });
-      } catch (e: any) {
-        console.error('Supabase error:', e);
+      } catch (e) {
+        if (e instanceof Error) {
+          console.error('Supabase error:', e.message);
+        } else {
+          console.error('Supabase error:', e);
+        }
         // Fall through to in-memory storage
       }
     }
     
     // Fallback to in-memory
-    const product = { id: `p_${Date.now()}`, ...p };
-    PRODUCTS.unshift(product);
-    return NextResponse.json({ product });
-  } catch (e: any) {
-    return NextResponse.json({ error: e.message || 'Invalid payload' }, { status: 400 });
+  const product: Product = { id: `p_${Date.now()}`, ...p };
+  PRODUCTS.unshift(product);
+  return NextResponse.json({ product });
+  } catch (e) {
+    if (e instanceof Error) {
+      return NextResponse.json({ error: e.message }, { status: 400 });
+    }
+    return NextResponse.json({ error: 'Invalid payload' }, { status: 400 });
   }
 }

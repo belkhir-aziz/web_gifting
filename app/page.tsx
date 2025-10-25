@@ -3,7 +3,22 @@ import { useEffect, useState } from 'react';
 import { OCCASIONS, RELATIONSHIPS, AGE_RANGES } from '@/lib/constants';
 
 export default function HomePage() {
-  const [queue, setQueue] = useState<any[]>([]);
+  type Product = {
+    id?: string;
+    name: string;
+    price: string;
+    image_url: string;
+    product_link: string;
+    description?: string;
+    category?: string;
+    availability?: boolean;
+    rating?: number;
+    occasions?: string[];
+    relationships?: string[];
+    age_ranges?: string[];
+    needs_categorization?: boolean;
+  };
+  const [queue, setQueue] = useState<Product[]>([]);
   const [loading, setLoading] = useState(true);
   const [rating, setRating] = useState<string | null>(null);
   const [showCategorization, setShowCategorization] = useState(false);
@@ -185,7 +200,7 @@ export default function HomePage() {
 
   const current = queue[0];
   const total = totalProducts;
-  const reviewed = total - queue.length;
+  // Removed unused reviewed variable
 
   const truncateWords = (s?: string, maxWords = 13) => {
     if (!s) return '';
@@ -212,6 +227,7 @@ export default function HomePage() {
                 src={current.image_url} 
                 alt={current.name}
                 className="h-full w-full object-cover"
+                // eslint-disable-next-line @next/next/no-img-element
               />
             </div>
             <div className="p-4">
@@ -330,6 +346,7 @@ export default function HomePage() {
                   <div className="bg-slate-100">
                     <div className="aspect-[3/2] w-full overflow-hidden">
                       <img src={current.image_url} alt={current.name} className="h-full w-full object-cover" />
+                {/* eslint-disable-next-line @next/next/no-img-element */}
                     </div>
                   </div>
                 )}
@@ -342,7 +359,7 @@ export default function HomePage() {
                     <div className="mt-2 text-xl font-extrabold text-emerald-600">{current.price}</div>
                   )}
                   {current.description && (
-                    <p className="mt-2 text-slate-600 line-clamp-2 text-sm">{current.description}</p>
+                    <p className="mt-2 text-slate-600 line-clamp-2 text-sm">{current.description?.replace("'", "&apos;")}</p>
                   )}
                 </div>
               </div>
@@ -383,6 +400,7 @@ export default function HomePage() {
                 </div>
                 <h2 className="text-2xl font-bold text-slate-800 mb-2">All Done!</h2>
                 <p className="text-slate-600">You've reviewed all available gifts</p>
+                <p className="text-slate-600">You&apos;ve reviewed all available gifts</p>
               </div>
             </div>
           )}
