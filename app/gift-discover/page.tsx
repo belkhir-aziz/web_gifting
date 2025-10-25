@@ -58,17 +58,6 @@ export default function GiftDiscover() {
   return (
     <div className="fixed inset-0 flex flex-col bg-gradient-to-br from-slate-50 via-white to-slate-100">
       {/* Header */}
-      <div className="flex items-center justify-between px-8 py-6 bg-white/80 backdrop-blur-sm border-b border-slate-200">
-        <div>
-          <h1 className="text-3xl font-bold bg-gradient-to-r from-purple-600 to-pink-600 bg-clip-text text-transparent">
-            Gift Discovery
-          </h1>
-          <p className="text-sm text-slate-500 mt-1">Find the perfect gift</p>
-        </div>
-        <div className="text-sm font-medium text-slate-600">
-          {queue.length} {queue.length === 1 ? 'item' : 'items'} remaining
-        </div>
-      </div>
 
       {/* Main Content Area */}
       {current ? (
@@ -117,26 +106,13 @@ export default function GiftDiscover() {
                   {current.description && (
                     <p className="text-slate-600 text-lg leading-relaxed line-clamp-3">{current.description?.replace("'", "&apos;")}</p>
                   )}
-                  
-                  {current.product_link && (
-                    <a 
-                      href={current.product_link}
-                      target="_blank"
-                      rel="noopener noreferrer"
-                      className="inline-flex items-center gap-2 mt-4 text-purple-600 hover:text-purple-700 font-medium"
-                    >
-                      View Product
-                      <svg className="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M10 6H6a2 2 0 00-2 2v10a2 2 0 002 2h10a2 2 0 002-2v-4M14 4h6m0 0v6m0-6L10 14" />
-                      </svg>
-                    </a>
-                  )}
+                
                 </div>
               </div>
             </div>
 
-            {/* Right Action Buttons - Like & Superlike stacked */}
-            <div className="flex-shrink-0 flex flex-col gap-4">
+            {/* Right Action Buttons - Superlike, Merchant, Like stacked */}
+            <div className="flex-shrink-0 flex flex-col gap-4 items-center">
               {/* Superlike Button */}
               <button
                 onClick={() => act('superlike')}
@@ -149,6 +125,7 @@ export default function GiftDiscover() {
                 <span className="text-lg font-bold">Love it!</span>
               </button>
 
+
               {/* Like Button */}
               <button
                 onClick={() => act('like')}
@@ -159,7 +136,7 @@ export default function GiftDiscover() {
                   <path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" />
                 </svg>
                 <span className="text-lg font-bold">Like it</span>
-              </button>
+              </button>             
             </div>
 
           </div>
@@ -173,7 +150,7 @@ export default function GiftDiscover() {
               </svg>
             </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-2">All Done!</h2>
-            <p className="text-slate-600">You've reviewed all available gifts</p>
+            <p className="text-slate-600">You&apos;ve reviewed all available gifts</p>
           </div>
         </div>
       )}
