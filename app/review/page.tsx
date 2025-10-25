@@ -116,7 +116,7 @@ export default function ReviewPage() {
               <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
             </div>
             <h2 className="text-2xl font-bold text-slate-800 mb-2">All Done!</h2>
-            <p className="text-slate-600">You've reviewed all available gifts</p>
+            <p className="text-slate-600">You&apos;ve reviewed all available gifts</p>
           <p className="text-slate-600">You&apos;ve reviewed all available gifts</p>
           </div>
         </div>

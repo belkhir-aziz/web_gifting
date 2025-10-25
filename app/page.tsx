@@ -23,7 +23,6 @@ export default function HomePage() {
   const [rating, setRating] = useState<string | null>(null);
   const [showCategorization, setShowCategorization] = useState(false);
   const [askForCategorization, setAskForCategorization] = useState(false);
-  const [totalProducts, setTotalProducts] = useState(0);
   const [categories, setCategories] = useState({
     occasions: [] as string[],
     relationships: [] as string[],
@@ -53,22 +52,22 @@ export default function HomePage() {
       } catch {}
     };
 
-    const loadFromCache = () => {
+    const loadFromCache = (): Product[] | null => {
       try {
         const raw = sessionStorage.getItem(QUEUE_KEY);
         if (!raw) return null;
-        const cached = JSON.parse(raw);
-        if (!Array.isArray(cached)) return null;
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) return null;
         // If any legacy demo items slipped in, ignore cache
-        if (cached.some((x: any) => String(x?.id || '').startsWith('demo-'))) {
+        if (parsed.some((x: unknown) => String(((x as { id?: unknown })?.id) || '').startsWith('demo-'))) {
           sessionStorage.removeItem(QUEUE_KEY);
           return null;
         }
-        return cached;
+        return parsed as Product[];
       } catch { return null; }
     };
 
-    const saveToCache = (items: any[]) => {
+    const saveToCache = (items: Product[]) => {
       try {
         sessionStorage.setItem(QUEUE_KEY, JSON.stringify(items));
       } catch {}
@@ -79,7 +78,6 @@ export default function HomePage() {
       const cached = loadFromCache();
       if (cached && cached.length) {
         setQueue(cached);
-        setTotalProducts(cached.length);
         setLoading(false);
         return;
       }
@@ -90,18 +88,15 @@ export default function HomePage() {
         const products = data.products || [];
         if (products.length > 0) {
           setQueue(products);
-          setTotalProducts(products.length);
           saveToCache(products);
         } else {
           // No demo fallback: show empty state
           setQueue([]);
-          setTotalProducts(0);
         }
       } catch (err) {
         console.error('Failed to load products:', err);
-        // No demo fallback: show empty state
-        setQueue([]);
-        setTotalProducts(0);
+  // No demo fallback: show empty state
+  setQueue([]);
       } finally {
         setLoading(false);
       }
@@ -154,7 +149,7 @@ export default function HomePage() {
     if (!current) return;
     
     // Include categories if user provided them
-    const payload: any = { itemId: current.id, action: rating };
+  const payload: { itemId?: string | undefined; action?: string | null; occasions?: string[]; relationships?: string[]; age_ranges?: string[] } = { itemId: current.id, action: rating };
     if (categories.occasions.length > 0) payload.occasions = categories.occasions;
     if (categories.relationships.length > 0) payload.relationships = categories.relationships;
     if (categories.age_ranges.length > 0) payload.age_ranges = categories.age_ranges;
@@ -199,7 +194,6 @@ export default function HomePage() {
   };
 
   const current = queue[0];
-  const total = totalProducts;
   // Removed unused reviewed variable
 
   const truncateWords = (s?: string, maxWords = 13) => {
@@ -399,7 +393,7 @@ export default function HomePage() {
                   <svg className="w-12 h-12 text-white" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M5 13l4 4L19 7" /></svg>
                 </div>
                 <h2 className="text-2xl font-bold text-slate-800 mb-2">All Done!</h2>
-                <p className="text-slate-600">You've reviewed all available gifts</p>
+                <p className="text-slate-600">You&apos;ve reviewed all available gifts</p>
                 <p className="text-slate-600">You&apos;ve reviewed all available gifts</p>
               </div>
             </div>

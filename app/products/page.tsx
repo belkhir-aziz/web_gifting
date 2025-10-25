@@ -23,7 +23,7 @@ export default function ProductsPage() {
       if (stored) {
         setAskForCategorization(stored === 'true');
       }
-    } catch (e) {
+    } catch {
       // Ignore localStorage errors
     }
   }, []);

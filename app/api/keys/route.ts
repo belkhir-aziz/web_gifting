@@ -1,6 +1,5 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { z } from 'zod';
-import { encryptJson } from '@/lib/crypto';
 
 const KeysSchema = z.object({
   amazon: z.object({ accessKey: z.string().min(1), secretKey: z.string().min(1) }).optional(),
@@ -13,7 +12,8 @@ const KeysSchema = z.object({
 export async function POST(req: NextRequest) {
   try {
     const body = await req.json();
-    const parsed = KeysSchema.parse(body);
+    // Validate payload shape; don't assign the parsed value since it's unused
+    KeysSchema.parse(body);
     return NextResponse.json({ ok: true });
   } catch (e) {
     if (e instanceof Error) {
