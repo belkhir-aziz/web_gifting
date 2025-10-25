@@ -6,23 +6,15 @@ A lightweight web companion for the Gifty app:
 - Fast review queue to like / dislike / superlike products
 - Deployable for free on Vercel, with Supabase (free tier) for persistence
 
-## Tech
-- Next.js 14 (App Router) + TypeScript + Tailwind CSS
-- API Routes for server-side logic
-- Optional Supabase for Postgres + Auth + Storage
 
-## Getting Started
-1. Install deps
-```bash
-npm install
-```
-2. Copy env and fill values
-```bash
-cp .env.example .env
-# Fill SUPABASE_* if using DB, set BASIC_AUTH_* for quick protection
-# Generate ENCRYPTION_KEY (32 bytes base64), e.g. Node: crypto.randomBytes(32).toString('base64')
-```
-3. Run dev server
+## Pages
+
+- `/products` — Product management
+- `/gift-discover` — Gift discovery
+
+## API routes
+
+- `/api/products` — Product CRUD
 ```bash
 npm run dev
 ```

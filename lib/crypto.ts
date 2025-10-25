@@ -14,7 +14,7 @@ export function encryptJson(obj: unknown) {
   return Buffer.concat([iv, tag, enc]).toString('base64');
 }
 
-export function decryptJson<T = any>(b64: string): T {
+export function decryptJson<T = unknown>(b64: string): T {
   if (!KEY) throw new Error('Missing ENCRYPTION_KEY');
   const buf = Buffer.from(b64, 'base64');
   const iv = buf.subarray(0, 12);

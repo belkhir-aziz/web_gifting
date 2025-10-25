@@ -10,7 +10,7 @@ export default function ProductCard({ product }: { product: any }) {
         <div className="aspect-video overflow-hidden bg-gray-100">
           <img 
             src={product.image_url} 
-            alt={product.name} 
+            alt={product.name || 'Product image'} 
             className="h-full w-full object-cover" 
           />
         </div>
