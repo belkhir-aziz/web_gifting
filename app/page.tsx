@@ -358,31 +358,43 @@ export default function HomePage() {
                 </div>
               </div>
 
-              {/* Action buttons under the card */}
-              <div className="flex items-center justify-center gap-3">
+              {/* Softer, modern action bar: Dislike, Like, Superlike, Go to merchant */}
+              <div className="flex items-center justify-center gap-4 mt-6">
                 <button
                   onClick={() => act('dislike')}
-                  className="inline-flex items-center gap-2 rounded-xl bg-rose-600 px-5 py-3 text-white font-semibold shadow hover:bg-rose-700 active:scale-95"
+                  className="inline-flex items-center gap-2 rounded-full bg-rose-100 text-rose-700 px-6 py-3 font-semibold shadow-sm hover:bg-rose-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-rose-200 transition-all"
                   aria-label="Dislike"
                 >
-                  <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
-                  Dislike
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24"><path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2.5} d="M6 18L18 6M6 6l12 12" /></svg>
+                  <span className="font-medium">Dislike</span>
                 </button>
                 <button
                   onClick={() => act('like')}
-                  className="inline-flex items-center gap-2 rounded-xl bg-emerald-600 px-5 py-3 text-white font-semibold shadow hover:bg-emerald-700 active:scale-95"
+                  className="inline-flex items-center gap-2 rounded-full bg-emerald-100 text-emerald-700 px-6 py-3 font-semibold shadow-sm hover:bg-emerald-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-emerald-200 transition-all"
                   aria-label="Like"
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
-                  Like
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z" /></svg>
+                  <span className="font-medium">Like</span>
                 </button>
                 <button
                   onClick={() => act('superlike')}
-                  className="inline-flex items-center gap-2 rounded-xl bg-amber-500 px-5 py-3 text-white font-semibold shadow hover:bg-amber-600 active:scale-95"
+                  className="inline-flex items-center gap-2 rounded-full bg-amber-100 text-amber-700 px-6 py-3 font-semibold shadow-sm hover:bg-amber-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-amber-200 transition-all"
                   aria-label="Superlike"
                 >
-                  <svg className="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
-                  Superlike
+                  <svg className="w-6 h-6" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z" /></svg>
+                  <span className="font-medium">Superlike</span>
+                </button>
+                <button
+                  onClick={() => window.open(current.product_link, '_blank', 'noopener,noreferrer')}
+                  className="inline-flex items-center gap-2 rounded-full bg-violet-100 text-violet-700 px-6 py-3 font-semibold shadow-sm hover:bg-violet-200 focus:outline-none focus-visible:ring-2 focus-visible:ring-violet-200 transition-all"
+                  aria-label="Go to merchant"
+                >
+                  <svg className="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path d="M3 3h2l.4 2M7 13h10l4-8H5.4" strokeWidth={2} strokeLinecap="round" strokeLinejoin="round" />
+                    <circle cx="10" cy="20" r="1" />
+                    <circle cx="18" cy="20" r="1" />
+                  </svg>
+                  <span className="font-medium">Go to merchant</span>
                 </button>
               </div>
             </div>
