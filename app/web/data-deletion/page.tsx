@@ -2,7 +2,7 @@ import type { Metadata } from 'next';
 import Link from 'next/link';
 
 // Configure your public contact email here or via NEXT_PUBLIC_SUPPORT_EMAIL
-const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'support@example.com';
+const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'aziz.belkhir.aziz@gmail.com';
 const LAST_UPDATED = '2025-11-02';
 
 export const metadata: Metadata = {
@@ -27,8 +27,9 @@ export default function DataDeletionPage() {
 
         <h3 className="mt-4 font-medium">1) Delete account (full deletion)</h3>
         <ul className="ml-6 mt-2 list-disc text-slate-700">
-          <li>Open the app → Profile → Privacy Options.</li>
-          <li>Tap <em>Delete Account</em> and confirm.</li>
+          <li>Open the app → Friends.</li>
+          <li>Tap the <em>Personal details</em> icon in the top‑right.</li>
+          <li>Select <em>Delete Account</em> and confirm.</li>
         </ul>
         <p className="mt-2 text-slate-700"><strong>What happens:</strong></p>
         <ul className="ml-6 list-disc text-slate-700">
@@ -40,8 +41,9 @@ export default function DataDeletionPage() {
 
         <h3 className="mt-5 font-medium">2) Delete data only (keep account)</h3>
         <ul className="ml-6 mt-2 list-disc text-slate-700">
-          <li>Open the app → Profile → Privacy Options.</li>
-          <li>Tap <em>Delete Data</em> and confirm.</li>
+          <li>Open the app → Friends.</li>
+          <li>Tap the <em>Personal details</em> icon in the top‑right.</li>
+          <li>Select <em>Delete Data</em> and confirm.</li>
         </ul>
         <p className="mt-2 text-slate-700"><strong>What happens:</strong></p>
         <ul className="ml-6 list-disc text-slate-700">
@@ -85,8 +87,9 @@ export default function DataDeletionPage() {
 
         <h3 className="mt-4 font-medium">1) Supprimer le compte (suppression complète)</h3>
         <ul className="ml-6 mt-2 list-disc text-slate-700">
-          <li>Ouvrez l’app → Profil → Options de confidentialité.</li>
-          <li>Touchez <em>Supprimer le compte</em> et confirmez.</li>
+          <li>Ouvrez l’app → Amis.</li>
+          <li>Touchez l’icône <em>Détails personnels</em> en haut à droite.</li>
+          <li>Choisissez <em>Supprimer le compte</em> et confirmez.</li>
         </ul>
         <p className="mt-2 text-slate-700"><strong>Ce qui se passe :</strong></p>
         <ul className="ml-6 list-disc text-slate-700">
@@ -98,8 +101,9 @@ export default function DataDeletionPage() {
 
         <h3 className="mt-5 font-medium">2) Supprimer les données uniquement (conserver le compte)</h3>
         <ul className="ml-6 mt-2 list-disc text-slate-700">
-          <li>Ouvrez l’app → Profil → Options de confidentialité.</li>
-          <li>Touchez <em>Supprimer les données</em> et confirmez.</li>
+          <li>Ouvrez l’app → Amis.</li>
+          <li>Touchez l’icône <em>Détails personnels</em> en haut à droite.</li>
+          <li>Choisissez <em>Supprimer les données</em> et confirmez.</li>
         </ul>
         <p className="mt-2 text-slate-700"><strong>Ce qui se passe :</strong></p>
         <ul className="ml-6 list-disc text-slate-700">
