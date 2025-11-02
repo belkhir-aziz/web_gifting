@@ -30,3 +30,14 @@ export const AGE_RANGES = [
   '51-65',
   '65+',
 ] as const;
+
+export const CATEGORIES = [
+  'readers',
+  'pet lovers',
+  'gamers',
+  'musicians',
+  'travelers',
+  'artists',
+  'chefs',
+  'fitness enthusiasts',
+] as const;

@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 
 export default function ReviewPage() {
   // Removed duplicate declaration
@@ -73,7 +74,13 @@ export default function ReviewPage() {
               <div className="w-full max-w-2xl bg-white rounded-3xl shadow-2xl overflow-hidden border border-slate-200">
                 {current.image_url && (
                   <div className="relative aspect-[4/3] bg-gradient-to-br from-slate-100 to-slate-200">
-                    <img src={current.image_url} alt={current.name} className="w-full h-full object-cover" />
+                    <Image
+                      src={current.image_url}
+                      alt={current.name}
+                      fill
+                      className="object-contain"
+                      sizes="(max-width: 768px) 100vw, 768px"
+                    />
                   </div>
                 )}
                 <div className="p-8">

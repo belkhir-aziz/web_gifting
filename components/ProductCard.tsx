@@ -5,6 +5,8 @@ export type Product = {
   name: string;
   price?: string;
   image_url?: string;
+  rating?: number;
+  ratings_count?: number;
   occasions?: string[];
   relationships?: string[];
   age_ranges?: string[];
@@ -36,6 +38,21 @@ export default function ProductCard({ product }: { product: Product }) {
         <h2 className="text-2xl font-bold text-gray-900">{product.name}</h2>
         {product.price && (
           <div className="mt-2 text-3xl font-bold text-blue-600">{product.price}</div>
+        )}
+        {(product.rating != null || product.ratings_count != null) && (
+          <div className="mt-2 flex items-center gap-2 text-sm text-gray-700">
+            {product.rating != null && (
+              <span className="inline-flex items-center gap-1">
+                <span aria-hidden>⭐</span>
+                <span>{product.rating.toFixed(1)} / 5</span>
+              </span>
+            )}
+            {product.ratings_count != null && (
+              <span className="text-gray-500">
+                ({product.ratings_count.toLocaleString()} ratings)
+              </span>
+            )}
+          </div>
         )}
         {hasCategories && (
           <div className="mt-4 space-y-2">

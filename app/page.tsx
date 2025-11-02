@@ -1,5 +1,6 @@
 "use client";
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import { OCCASIONS, RELATIONSHIPS, AGE_RANGES } from '@/lib/constants';
 
 export default function HomePage() {
@@ -216,12 +217,14 @@ export default function HomePage() {
 
           {/* Product Image */}
           <div className="overflow-hidden rounded-xl border bg-white shadow-lg">
-            <div className="aspect-video w-full overflow-hidden bg-gray-100">
-              <img 
-                src={current.image_url} 
+            <div className="relative aspect-video w-full overflow-hidden bg-gray-100">
+              <Image
+                src={current.image_url}
                 alt={current.name}
-                className="h-full w-full object-cover"
-                // eslint-disable-next-line @next/next/no-img-element
+                fill
+                className="object-contain"
+                sizes="(max-width: 768px) 100vw, 640px"
+                priority
               />
             </div>
             <div className="p-4">
@@ -338,9 +341,14 @@ export default function HomePage() {
               <div className="rounded-2xl border bg-white shadow-sm overflow-hidden">
                 {current.image_url && (
                   <div className="bg-slate-100">
-                    <div className="aspect-[3/2] w-full overflow-hidden">
-                      <img src={current.image_url} alt={current.name} className="h-full w-full object-cover" />
-                {/* eslint-disable-next-line @next/next/no-img-element */}
+                    <div className="relative aspect-[3/2] w-full overflow-hidden">
+                      <Image
+                        src={current.image_url}
+                        alt={current.name}
+                        fill
+                        className="object-contain"
+                        sizes="(max-width: 768px) 100vw, 672px"
+                      />
                     </div>
                   </div>
                 )}
