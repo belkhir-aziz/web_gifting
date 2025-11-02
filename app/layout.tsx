@@ -4,8 +4,8 @@ import Link from 'next/link';
 import TopNav from '@/components/TopNav';
 
 export const metadata: Metadata = {
-  title: 'Gifty Web Admin',
-  description: 'Ops and curation console for Gifty',
+  title: 'Gifting Web Admin',
+  description: 'Ops and curation console for Gifting',
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -15,7 +15,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <header className="border-b bg-white/70 backdrop-blur">
           <nav className="container flex h-14 items-center justify-between">
             <Link href="/" className="font-semibold text-slate-900 hover:opacity-80">
-              Gifty
+              Gifting
             </Link>
             <TopNav />
           </nav>
@@ -24,7 +24,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         <footer className="border-t bg-white/60">
           <div className="container py-6 text-sm text-slate-600">
             <div className="flex flex-wrap items-center gap-x-4 gap-y-2">
-              <span>© {new Date().getFullYear()} Gifty</span>
+              <span>© {new Date().getFullYear()} Gifting</span>
               <Link href="/web/privacy-policy" className="text-slate-700 hover:text-slate-900 underline underline-offset-2">
                 Privacy Policy
               </Link>

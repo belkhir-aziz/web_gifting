@@ -4,9 +4,9 @@ const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'aziz.belkhir.azi
 const LAST_UPDATED = '2025-11-02';
 
 export const metadata: Metadata = {
-  title: 'Gifty — Privacy Policy',
+  title: 'Gifting — Privacy Policy',
   description:
-    'Privacy Policy for the Gifty app: what data we collect, how we use it, legal bases, retention periods, your rights (access, deletion), and contact info. (EN/FR) ',
+    'Privacy Policy for the Gifting app: what data we collect, how we use it, legal bases, retention periods, your rights (access, deletion), and contact info. (EN/FR) ',
   robots: { index: true, follow: true },
 };
 
@@ -14,14 +14,14 @@ export default function PrivacyPolicyPage() {
   return (
     <div className="mx-auto max-w-3xl py-6">
       <header className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Gifty — Privacy Policy</h1>
+  <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Gifting — Privacy Policy</h1>
         <p className="mt-1 text-sm text-slate-500">Developer: Belkhir Aziz · Last updated: {LAST_UPDATED}</p>
       </header>
 
       <section className="rounded-xl border bg-white p-5 shadow-sm">
         <h2 className="text-lg font-semibold">EN — Overview</h2>
         <p className="mt-2 text-slate-700">
-          Gifty helps you discover gifts and manage wish ideas with friends. This policy explains what data we collect, how we use it, how long we keep it, and
+          Gifting helps you discover gifts and manage wish ideas with friends. This policy explains what data we collect, how we use it, how long we keep it, and
           the choices you have.
         </p>
 
@@ -76,7 +76,7 @@ export default function PrivacyPolicyPage() {
         </ul>
 
         <h3 className="mt-5 font-medium">Children</h3>
-        <p className="mt-2 text-slate-700">Gifty is not intended for children under the age required by local law to consent to data processing without parental approval.</p>
+  <p className="mt-2 text-slate-700">Gifting is not intended for children under the age required by local law to consent to data processing without parental approval.</p>
 
         <h3 className="mt-5 font-medium">International transfers</h3>
         <p className="mt-2 text-slate-700">
@@ -95,7 +95,7 @@ export default function PrivacyPolicyPage() {
       <section className="mt-8">
         <h2 className="text-lg font-semibold">FR — Politique de confidentialité</h2>
         <p className="mt-2 text-slate-700">
-          Gifty vous aide à découvrir des cadeaux et à gérer des idées avec vos amis. Cette politique précise quelles données nous traitons, dans quel but, pour
+          Gifting vous aide à découvrir des cadeaux et à gérer des idées avec vos amis. Cette politique précise quelles données nous traitons, dans quel but, pour
           combien de temps et vos choix.
         </p>
 
@@ -146,7 +146,7 @@ export default function PrivacyPolicyPage() {
         </ul>
 
         <h3 className="mt-5 font-medium">Enfants</h3>
-        <p className="mt-2 text-slate-700">Gifty ne s’adresse pas aux enfants n’ayant pas l’âge requis pour consentir au traitement des données sans accord parental.</p>
+  <p className="mt-2 text-slate-700">Gifting ne s’adresse pas aux enfants n’ayant pas l’âge requis pour consentir au traitement des données sans accord parental.</p>
 
         <h3 className="mt-5 font-medium">Transferts internationaux</h3>
         <p className="mt-2 text-slate-700">Les données peuvent être traitées et stockées dans la région de nos prestataires. Nous mettons en place des mesures raisonnables de protection.</p>

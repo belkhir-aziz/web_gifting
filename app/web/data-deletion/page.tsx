@@ -6,9 +6,9 @@ const SUPPORT_EMAIL = process.env.NEXT_PUBLIC_SUPPORT_EMAIL || 'aziz.belkhir.azi
 const LAST_UPDATED = '2025-11-02';
 
 export const metadata: Metadata = {
-  title: 'Gifty — Account and Data Deletion',
+  title: 'Gifting — Account and Data Deletion',
   description:
-    'How to request account deletion or data deletion for the Gifty app, including what data are deleted, what may be retained, and retention timelines. (EN/FR)',
+    'How to request account deletion or data deletion for the Gifting app, including what data are deleted, what may be retained, and retention timelines. (EN/FR)',
   robots: { index: true, follow: true },
 };
 
@@ -17,7 +17,7 @@ export default function DataDeletionPage() {
   return (
     <div className="mx-auto max-w-3xl py-6">
       <header className="mb-6">
-        <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Gifty — Account and Data Deletion</h1>
+  <h1 className="text-2xl font-semibold tracking-tight text-slate-900">Gifting — Account and Data Deletion</h1>
         <p className="mt-1 text-sm text-slate-500">Developer: Belkhir Aziz · Last updated: {LAST_UPDATED}</p>
       </header>
 
@@ -144,7 +144,7 @@ export default function DataDeletionPage() {
       <div className="mt-8 text-sm text-slate-500">
         <p>
           Looking for our home page?{' '}
-          <Link className="text-blue-600 underline hover:no-underline" href="/">Return to Gifty</Link>.
+          <Link className="text-blue-600 underline hover:no-underline" href="/">Return to Gifting</Link>.
         </p>
       </div>
     </div>
