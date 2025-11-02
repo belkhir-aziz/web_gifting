@@ -1,6 +1,7 @@
 import { NextRequest, NextResponse } from 'next/server';
 import { load } from 'cheerio';
 import { addAmazonAffiliateTag, isAmazonUrl } from '@/lib/affiliate';
+import { fetchPage } from '@/lib/fetchPage';
 
 export const dynamic = 'force-dynamic';
 
@@ -14,17 +15,12 @@ export async function POST(req: NextRequest) {
       return NextResponse.json({ error: 'Only Amazon product URLs are supported' }, { status: 400 });
     }
 
-    // Fetch the page HTML server-side with a realistic UA
-    const res = await fetch(url, {
-      // Node runtime follows redirects by default
-      headers: {
-        'user-agent':
-          'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36',
-        'accept-language': 'fr-FR,fr;q=0.9,en;q=0.8',
-      },
-      cache: 'no-store',
-    });
-    const html = await res.text();
+    // Fetch the page HTML server-side (via proxy if configured) with a realistic UA
+    const html = await fetchPage(url, {
+      'user-agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36',
+      'accept-language': 'fr-FR,fr;q=0.9,en;q=0.8',
+    }, 'no-store');
 
     const $ = load(html);
 
