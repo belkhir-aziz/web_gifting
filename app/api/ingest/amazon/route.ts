@@ -116,3 +116,105 @@ export async function POST(req: NextRequest) {
     return NextResponse.json({ error: msg }, { status: 500 });
   }
 }
+ 
+export async function GET(req: NextRequest) {
+  try {
+    const { searchParams } = new URL(req.url);
+    const url = searchParams.get('url') || undefined;
+    if (!url || typeof url !== 'string') {
+      return NextResponse.json({ error: 'Missing url' }, { status: 400 });
+    }
+    if (!isAmazonUrl(url)) {
+      return NextResponse.json({ error: 'Only Amazon product URLs are supported' }, { status: 400 });
+    }
+
+    const html = await fetchPage(url, {
+      'user-agent':
+        'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/123 Safari/537.36',
+      'accept-language': 'fr-FR,fr;q=0.9,en;q=0.8',
+    }, 'no-store');
+
+    const $ = load(html);
+
+    const title = $('#productTitle').text().trim() || $('meta[property="og:title"]').attr('content') || '';
+      const priceRaw = $('#corePrice_feature_div .a-offscreen').first().text().trim()
+        || $('#priceblock_ourprice').text().trim()
+        || $('#priceblock_dealprice').text().trim()
+        || $('meta[itemprop="price"]').attr('content')
+        || '';
+    let image = $('#landingImage').attr('src') || $('img[data-old-hires]').attr('data-old-hires') || $('meta[property="og:image"]').attr('content') || '';
+    if (image && image.startsWith('//')) image = `https:${image}`;
+
+    const bullets = $('#feature-bullets li')
+      .map((_: number, el) => $(el).text().trim())
+      .get()
+      .filter(Boolean);
+    const description = bullets.join(' • ');
+
+      const ratingText = (
+        $('#acrPopover').attr('title') ||
+        $('i.a-icon-star span.a-icon-alt').text() ||
+        $('span[data-hook="rating-out-of-text"]').text() ||
+        ''
+      ).trim();
+      let rating: number | undefined = undefined;
+      const m = ratingText.match(/([0-9]+(?:[\.,][0-9]+)?)\s+(?:out of|sur)\s+5/);
+      if (m) rating = parseFloat(m[1].replace(',', '.'));
+
+      const countCandidates = [
+        $('#acrCustomerReviewText').first().text(),
+        $('span[data-hook="total-review-count"]').first().text(),
+        $('span#acrCustomerReviewText').first().text(),
+        $('a[href="#customerReviews"]').first().text(),
+      ].map((s) => (s || '').trim()).filter(Boolean);
+      let ratings_count: number | undefined = undefined;
+      const ct = countCandidates[0] || '';
+      const mCount = ct.match(/([0-9]{1,3}(?:[.,\s][0-9]{3})+|\d+)/);
+      if (mCount && mCount[1]) {
+        const cleaned = mCount[1].replace(/[^0-9]/g, '');
+        if (cleaned) ratings_count = parseInt(cleaned, 10);
+      } else {
+        const onlyDigits = ct.replace(/[^0-9]/g, '');
+        if (onlyDigits) {
+          const len = onlyDigits.length;
+          if (len % 2 === 0) {
+            const half = onlyDigits.slice(0, len / 2);
+            if (half.repeat(2) === onlyDigits) {
+              ratings_count = parseInt(half, 10);
+            } else {
+              ratings_count = parseInt(onlyDigits, 10);
+            }
+          } else {
+            ratings_count = parseInt(onlyDigits, 10);
+          }
+        }
+      }
+  const canonical = $('link[rel="canonical"]').attr('href') || url;
+    const product_link = addAmazonAffiliateTag(canonical);
+  const country = 'FR';
+
+    let price = priceRaw;
+    if (/^\d+(?:[\.,]\d+)?$/.test(priceRaw)) {
+      const numeric = priceRaw.replace(/[^0-9,\.]/g, '').replace(',', '.');
+      if (/[€]/.test(priceRaw)) {
+        price = `${numeric} €`;
+      } else {
+        price = numeric;
+      }
+    }
+
+      return NextResponse.json({
+      name: title,
+      price,
+      image_url: image,
+      product_link,
+        description,
+        rating,
+        ratings_count,
+        country,
+    });
+  } catch (e) {
+    const msg = e instanceof Error ? e.message : 'Failed to ingest Amazon page';
+    return NextResponse.json({ error: msg }, { status: 500 });
+  }
+}
